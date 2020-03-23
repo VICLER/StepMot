@@ -21,9 +21,8 @@ void setDir(bool dir);              // clockwise CW or counterclockwise CCW
 void invertDir(bool invertState);   // software direction inverting
 void setSteps(uint32_t steps);      // moving by steps
 void setAngle(float newAngle);      // moving by angle
+void rotate(bool dir);              // rotating clockwise CW or counterclockwise CCW
 float getAngle();                   // get the actual position 
 void resetPos();                    // reset the actual position to 0
 bool move();                        // this method drives the motor, so it must be in the loop() function. Returns true if the motor is moving and false otherwise
 ```
-  
-  
