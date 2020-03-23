@@ -1,5 +1,5 @@
 # StepMot 
-Arduino library for stepper motor using STEP/DIR
+Arduino library for driving stepper motor
 
 ### Features
 * this library allows you to drive your stepper motor very precisely in ABSOLUTE mode
