@@ -24,5 +24,6 @@ void setAngle(float newAngle);      // moving by angle
 void rotate(bool dir);              // rotating clockwise CW or counterclockwise CCW
 float getAngle();                   // get the actual position 
 void resetPos();                    // reset the actual position to 0
+void step();                        // make one step
 bool move();                        // this method drives the motor, so it must be in the loop() function. Returns true if the motor is moving and false otherwise
 ```
