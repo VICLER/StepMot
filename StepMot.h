@@ -3,7 +3,7 @@
 /*
   Arduino library for stepper motor using STEP/DIR
   Github: https://github.com/VICLER/StepMot
-  v 1.0
+  v 1.1
 
   by VICLER
 */
