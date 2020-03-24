@@ -19,14 +19,21 @@ StepMot::StepMot(float steps_per_revolution, uint8_t microsteps, uint8_t step_pi
   digitalWrite(_stepPin, 0);
 }
 
+void StepMot::setMode(bool mode) {
+  _mode = mode;
+}
+
+void StepMot::autoPower(bool status){
+  _autoPower = status;
+}
+
 void StepMot::setRPM(float rpm) {
   if(rpm <= 0) {
-    _targetSteps = 0;
-    _stopped = 1;
+    _moving = 0;
     return;
   }
   else {
-    _stopped = 0;
+    _moving = 1;
     _stepPeriod = 1000000.0 / (_stepsPerRevolution * _microsteps * rpm / 60.0);
   }
 }
@@ -45,24 +52,22 @@ void StepMot::disable() {
   }
 }
 
-void StepMot::setMode(bool mode) {
-  _mode = mode;
+void StepMot::setDir(bool dir) {
+  if(_dir != dir){
+    _dir = dir;
+    if (_inverted) digitalWrite(_dirPin, !_dir);
+    else digitalWrite(_dirPin, _dir);
+    _dir ? _stepCounter = 1 : _stepCounter = -1;
+  }
+}
+
+void StepMot::invertDir(bool invertState) {
+  _inverted = invertState;
 }
 
 void StepMot::setSteps(uint32_t steps) {
   _targetSteps = steps;
-  _moving = true;
-}
-
-void StepMot::rotate(bool dir) {
-  StepMot::setDir(dir);
-  _targetSteps = 1;
-  StepMot::move();
-}
-
-void StepMot::resetPos(){
-  _targetSteps = 0;
-  _currentSteps = 0;
+  _moving = 1;
 }
 
 void StepMot::setAngle(float newAngle) {
@@ -85,50 +90,45 @@ void StepMot::setAngle(float newAngle) {
     if (newAngle > 0) StepMot::setDir(CW);
     else if (newAngle < 0) StepMot::setDir(CCW);
   }
-  StepMot::setSteps(_targetSteps);
+  _moving = 1;
+}
+
+void StepMot::rotate(bool dir) {
+  StepMot::setDir(dir);
+  _targetSteps = 1;
+  //_moving = 1;
 }
 
 float StepMot::getAngle(){
   return _currentSteps * _anglePerStep; // current Angle
 }
 
-void StepMot::setDir(bool dir) {
-  if(_dir != dir){
-    _dir = dir;
-    if (_inverted) digitalWrite(_dirPin, !_dir);
-    else digitalWrite(_dirPin, _dir);
-    _dir ? _stepCounter = 1 : _stepCounter = -1;
-  }
-}
-
-void StepMot::invertDir(bool invertState) {
-  _inverted = invertState;
-}
-
-bool StepMot::step() {
-  if(_stopped) return 0;
-  if (_targetSteps > 0) {
-    if(_autoPower && !_enabled) StepMot::enable();
-    digitalWrite(_stepPin, HIGH);
-    digitalWrite(_stepPin, LOW);
-    _targetSteps--;
-    _currentSteps += _stepCounter;
-    return 1;
-  }
-  else {
-    if(_autoPower && _enabled) StepMot::disable();
-    return 0;
-  }
-}
-
-void StepMot::autoPower(bool status){
-  _autoPower = status;
+void StepMot::resetPos(){
+  _targetSteps = 0;
+  _currentSteps = 0;
 }
 
 bool StepMot::move() {
   if (micros() - _prevStepTime >= _stepPeriod) {
     _prevStepTime = micros();
-    _moving = StepMot::step();
+    if(!_moving) return 0;
+
+    if (_targetSteps > 0) {
+      StepMot::step();
+      return 1;
+    }
+    else if(_autoPower && _enabled)
+      StepMot::disable();
+
+    _moving = 0;
   }
   return _moving;
+}
+
+void StepMot::step() {
+    if(_autoPower && !_enabled) StepMot::enable();
+    digitalWrite(_stepPin, HIGH);
+    digitalWrite(_stepPin, LOW);
+    _targetSteps--;
+    _currentSteps += _stepCounter;
 }
