@@ -1,4 +1,5 @@
 # Arduino library for Stepper Motors
+For all stepper motor drivers with STEP/DIR interface
 
 ### Features
 * this library allows you to drive your stepper motor very precisely in ABSOLUTE mode
