@@ -42,8 +42,8 @@ class StepMot
     void rotate(bool dir);
     float getAngle();
     void resetPos();
-    bool move();
     void step();
+    bool move();
 
   private:
     const float _stepsPerRevolution = 0.0;
