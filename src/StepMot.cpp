@@ -99,6 +99,7 @@ float StepMot::getAngle(){
 void StepMot::resetPos(){
   _targetSteps = 0;
   _currentSteps = 0;
+  _stopped = 1;
 }
 
 bool StepMot::move() {
