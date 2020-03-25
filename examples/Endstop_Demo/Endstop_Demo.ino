@@ -31,7 +31,7 @@ void setup() {
 
 void loop() {
 
-  if(!motor.update()) {         // if reached targed angle (not moving) update information to Serial
+  if(!motor.update()) {
     static uint16_t angle = 0;
     
     Serial.print("Reached angle: ");
