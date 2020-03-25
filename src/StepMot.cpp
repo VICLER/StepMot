@@ -62,6 +62,7 @@ void StepMot::invertDir(bool invertState) {
 void StepMot::setSteps(uint32_t steps) {
   _targetSteps = steps;
   _stopped = 0;
+  _prevStepTime = micros();
 }
 
 void StepMot::setAngle(float newAngle) {
@@ -84,12 +85,16 @@ void StepMot::setAngle(float newAngle) {
     if (newAngle > 0) StepMot::setDir(CW);
     else if (newAngle < 0) StepMot::setDir(CCW);
   }
-  if(_targetSteps > 0) _stopped = 0;
+  if(_targetSteps > 0) {
+    _stopped = 0;
+    _prevStepTime = micros();
+  }
 }
 
 void StepMot::rotate(bool dir) {
   StepMot::setDir(dir);
   _stopped = 0;
+  _prevStepTime = micros();
 }
 
 float StepMot::getAngle(){
@@ -106,11 +111,11 @@ bool StepMot::move() {
   if(_stopped) return 0;
 
   if (micros() - _prevStepTime >= _stepPeriod) {
-    _prevStepTime = micros();
+    _prevStepTime += _stepPeriod;
 
     StepMot::step();
 
-    if (_targetSteps > 0) {
+    if (_targetSteps) {
       _targetSteps--;
       if(_targetSteps == 0){
         if(_autoPower && _enabled) StepMot::disable();
