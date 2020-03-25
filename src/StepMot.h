@@ -7,6 +7,7 @@
   v 1.1 - bug fixes
   v 1.2 - speed improvements
   v 1.3 - ready() function for separating update() from main loop
+  v 1.4 - invert direction fix, small bugfixes and stability improvements
   by VICLER
 */
 
@@ -31,7 +32,7 @@ enum STATE {
 class StepMot
 {
   public:
-    StepMot(float steps_per_revolution, uint8_t microsteps, uint8_t step_pin, uint8_t dir_pin, uint8_t en_pin);
+    StepMot(float steps_per_revolution, uint8_t step_pin, uint8_t dir_pin, uint8_t en_pin);
     void setMode(bool mode);
     void autoPower(bool status);
     void setRPM(float rpm);
@@ -50,7 +51,6 @@ class StepMot
 
   private:
     const float _stepsPerRevolution = 0.0;
-    const uint8_t _microsteps = 1;
     const float _stepsPerAngle = 0.0;
     const float _anglePerStep = 0.0;
     const uint8_t _stepPin;
