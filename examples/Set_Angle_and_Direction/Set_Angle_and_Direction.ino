@@ -14,8 +14,8 @@ StepMot motor(STEPS_PER_REVOLUTION * MICROSTEPS, STEP_PIN, DIR_PIN, EN_PIN);
 
 void setup() {
   Serial.begin(9600);
-  motor.setRPM(10);             // speed in revolutions per minute
-  motor.enable();               // power on the motor
+  motor.setRPM(10);     // speed in revolutions per minute
+  motor.enable();       // power on the motor
 }
 
 void loop() {

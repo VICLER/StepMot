@@ -22,7 +22,7 @@ void setup() {
 void loop() {
 
   while (Serial.available() > 0){
-    int angle = Serial.parseInt();  // positive numbers -> one direction, negative numbers -> opposite direction
+    int angle = Serial.parseInt();
     motor.setAngle(angle);
   }
 
