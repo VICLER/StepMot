@@ -24,14 +24,14 @@ void setup() {
 
   motor.rotate(CCW);    // go in home direction
   Serial.println("go home..");
-  while(digitalRead(ENDSTOP_PIN) && motor.move()) {}    // rotating until endstop switches low
+  while(digitalRead(ENDSTOP_PIN) && motor.update()) {}    // rotating until endstop switches low
   motor.resetPos();   // reset position
   motor.setRPM(10);
 }
 
 void loop() {
 
-  if(!motor.move()) {         // if reached targed angle (not moving) update information to Serial
+  if(!motor.update()) {         // if reached targed angle (not moving) update information to Serial
     static uint16_t angle = 0;
     
     Serial.print("Reached angle: ");
