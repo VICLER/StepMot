@@ -61,7 +61,7 @@ void StepMot::invertDir(bool invertState) {
 
 void StepMot::setSteps(uint32_t steps) {
   _targetSteps = steps;
-  _stopped = 0;
+  _ready = 0;
   _prevStepTime = micros();
 }
 
@@ -86,14 +86,14 @@ void StepMot::setAngle(float newAngle) {
     else if (newAngle < 0) StepMot::setDir(CCW);
   }
   if(_targetSteps > 0) {
-    _stopped = 0;
+    _ready = 0;
     _prevStepTime = micros();
   }
 }
 
 void StepMot::rotate(bool dir) {
   StepMot::setDir(dir);
-  _stopped = 0;
+  _ready = 0;
   _prevStepTime = micros();
 }
 
@@ -104,11 +104,22 @@ float StepMot::getAngle(){
 void StepMot::resetPos(){
   _targetSteps = 0;
   _currentSteps = 0;
-  _stopped = 1;
+  _ready = 1;
 }
 
-bool StepMot::move() {
-  if(_stopped) return 0;
+void StepMot::step() {
+    if(_autoPower && !_enabled) StepMot::enable();
+    digitalWrite(_stepPin, HIGH);
+    digitalWrite(_stepPin, LOW);
+    _currentSteps += _stepCounter;
+}
+
+bool StepMot::ready(){
+  return _ready;
+}
+
+bool StepMot::update() {
+  if(_ready) return 0;
 
   if (micros() - _prevStepTime >= _stepPeriod) {
     _prevStepTime += _stepPeriod;
@@ -119,17 +130,10 @@ bool StepMot::move() {
       _targetSteps--;
       if(_targetSteps == 0){
         if(_autoPower && _enabled) StepMot::disable();
-        _stopped = 1;
+        _ready = 1;
       }
       return 1;
     }
   }
-  return !_stopped;
-}
-
-void StepMot::step() {
-    if(_autoPower && !_enabled) StepMot::enable();
-    digitalWrite(_stepPin, HIGH);
-    digitalWrite(_stepPin, LOW);
-    _currentSteps += _stepCounter;
+  return !_ready;
 }
