@@ -2,12 +2,11 @@
 
 /*
   Arduino library for stepper motor using STEP/DIR
-  Github: https://github.com/VICLER/StepMot
-  
-  
+  https://github.com/VICLER/StepMot
+
   v 1.1 - bug fixes
   v 1.2 - speed improvements
-
+  v 1.3 - ready() function for separating update() from main loop
   by VICLER
 */
 
@@ -46,7 +45,8 @@ class StepMot
     float getAngle();
     void resetPos();
     void step();
-    bool move();
+    bool ready();
+    bool update();
 
   private:
     const float _stepsPerRevolution = 0.0;
@@ -66,6 +66,6 @@ class StepMot
     bool _autoPower = false;
     bool _inverted = false;
     bool _enabled = false;
-    bool _stopped = true;
+    bool _ready = true;
     bool _dir = CW;
 };
