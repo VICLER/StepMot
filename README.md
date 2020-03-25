@@ -8,7 +8,6 @@ For all stepper motor drivers with STEP/DIR interface
 #### Methods
 ```C++
 StepMot(float steps_per_revolution,
-        uint8_t microsteps, 
         uint8_t step_pin, 
         uint8_t dir_pin, 
         uint8_t en_pin);
@@ -25,5 +24,6 @@ void rotate(bool dir);              // rotating clockwise CW or counterclockwise
 float getAngle();                   // get the actual position 
 void resetPos();                    // reset the actual position to 0
 void step();                        // make one step
-bool move();                        // this method drives the motor, so it must be in the loop() function. Returns true if the motor is moving and false otherwise
+bool ready();                       // get status if target is reached
+bool update();                      // this method drives the motor, so it must be in the loop() function. Returns true if the motor is moving and false otherwise
 ```
