@@ -6,6 +6,7 @@
   
   
   v 1.1 - bug fixes
+  v 1.2 - speed improvements
 
   by VICLER
 */
