@@ -14,9 +14,7 @@ StepMot motor(STEPS_PER_REVOLUTION, MICROSTEPS, STEP_PIN, DIR_PIN, EN_PIN);
 
 void setup() {
   Serial.begin(9600);
-  //motor.setMode(ABSOLUTE);      // set to ABSOLUTE or RELATIVE modes (default RELATIVE)
-  //motor.autoPower(ON);          // when ON motor will be enabled only while moving (default OFF)
-  //motor.invertDir(ON);          // software direction inverting 
+  motor.setMode(ABSOLUTE);      // set to ABSOLUTE or RELATIVE modes (default RELATIVE)
   motor.setRPM(10);             // speed in revolutions per minute
   motor.enable();               // power on the motor
 }
@@ -28,5 +26,5 @@ void loop() {
     motor.setAngle(angle);
   }
 
-  if(motor.move()) Serial.println(motor.getAngle());
+  if(motor.update()) Serial.println(motor.getAngle());
 }
