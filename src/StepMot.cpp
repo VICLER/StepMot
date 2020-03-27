@@ -27,8 +27,7 @@ void StepMot::autoPower(bool status) {
 }
 
 void StepMot::setRPM(float rpm) {
-  if (rpm > 0)
-    _stepPeriod = 1000000.0 / (_stepsPerRevolution * rpm / 60.0);
+  if (rpm > 0) _stepPeriod = 1000000.0 / (_stepsPerRevolution * rpm / 60.0);
 }
 
 void StepMot::enable() {
@@ -115,7 +114,7 @@ bool StepMot::update() {
 
   if (micros() - _prevStepTime >= _stepPeriod) {
     _prevStepTime = micros();
-    
+
     StepMot::step();
 
     if (_targetSteps) {
