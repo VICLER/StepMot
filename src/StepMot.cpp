@@ -27,7 +27,16 @@ void StepMot::autoPower(bool status) {
 }
 
 void StepMot::setRPM(float rpm) {
-  if (rpm > 0) _stepPeriod = 1000000.0 / (_stepsPerRevolution * rpm / 60.0);
+  if(rpm == 0){
+    _stop = true;
+    if (_autoPower && _enabled) StepMot::disable();
+    return;
+  }
+  else if (rpm > 0) StepMot::setDir(CW);
+  else  StepMot::setDir(CCW);
+  _stepPeriod = 1000000.0 / (_stepsPerRevolution * abs(rpm) / 60.0);
+  if (_autoPower && !_enabled)  StepMot::enable();
+  _stop = false;
 }
 
 void StepMot::enable() {
@@ -88,6 +97,11 @@ void StepMot::rotate(bool dir) {
   _ready = 0;
 }
 
+void StepMot::rotate()
+{
+  _ready = 0;
+}
+
 float StepMot::getAngle() {
   return _currentSteps * _anglePerStep; // current Angle
 }
@@ -110,7 +124,7 @@ bool StepMot::ready() {
 }
 
 bool StepMot::update() {
-  if (_ready) return 0;
+  if (_ready || _stop) return 0;
 
   if (micros() - _prevStepTime >= _stepPeriod) {
     _prevStepTime = micros();

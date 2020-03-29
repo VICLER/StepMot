@@ -43,6 +43,7 @@ class StepMot
     void setSteps(uint32_t steps);
     void setAngle(float newAngle);
     void rotate(bool dir);
+    void rotate();
     float getAngle();
     void resetPos();
     void step();
@@ -68,4 +69,5 @@ class StepMot
     bool _enabled = false;
     bool _ready = true;
     bool _dir = CW;
+    bool _stop = true;
 };
