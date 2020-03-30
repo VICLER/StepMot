@@ -35,6 +35,7 @@ class StepMot
     StepMot(float steps_per_revolution, uint8_t step_pin, uint8_t dir_pin, uint8_t en_pin);
     void setMode(bool mode);
     void autoPower(bool status);
+    void setBacklash(float angle);
     void setRPM(float rpm);
     void enable();
     void disable();
@@ -63,6 +64,8 @@ class StepMot
     int32_t _currentSteps = 0;
     int8_t _stepCounter = 1;
     float _targetAngle = 0.0;
+    float _currentAngle = 0.0;
+    float _backlash = 0.0;
     bool _mode = RELATIVE;
     bool _autoPower = false;
     bool _inverted = false;
