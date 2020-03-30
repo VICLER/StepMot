@@ -74,23 +74,21 @@ void StepMot::setSteps(uint32_t steps) {
 }
 
 void StepMot::setAngle(float newAngle) {
-  if (_mode == ABSOLUTE) {
-
-    if (newAngle > _currentAngle) {
-      StepMot::setDir(CW);
-      newAngle += _backlash;
-    }
-    else if (newAngle < _currentAngle)  StepMot::setDir(CCW);
-
-    _targetAngle = abs(newAngle - _currentAngle);
-
-    _targetSteps = round(_targetAngle * _stepsPerAngle);
+  if(_mode == RELATIVE){
+    if(newAngle > 0)  newAngle = _currentAngle + newAngle;
+    else  newAngle = _currentAngle + newAngle - _backlash;
   }
-  else if (_mode == RELATIVE) {
-    if (newAngle > 0) StepMot::setDir(CW);
-    else if (newAngle < 0) StepMot::setDir(CCW);
-    _targetSteps = round(abs(newAngle * _stepsPerAngle));
+
+  if (newAngle > _currentAngle) {      
+    StepMot::setDir(CW);
+    newAngle += _backlash;
   }
+  else if (newAngle < _currentAngle)  StepMot::setDir(CCW);
+
+  _targetAngle = abs(newAngle - _currentAngle);
+
+  _targetSteps = round(_targetAngle * _stepsPerAngle);
+
   if (_targetSteps > 0) _ready = 0;
 }
 
