@@ -24,7 +24,7 @@ void setSteps(uint32_t steps);      // moving by steps
 void setAngle(float newAngle);      // moving by angle
 void rotate(bool dir);              // rotating clockwise CW or counterclockwise CCW
 void rotate();                      // set speed (RPM) and rotate. Positive speed -> clockwise, negative -> counterclockwise
-float getAngle();                   // get the actual position 
+float getAngle();                   // get the absolute actual position
 void resetPos();                    // reset the actual position to 0
 void step();                        // make one step
 bool ready();                       // get status if target is reached
