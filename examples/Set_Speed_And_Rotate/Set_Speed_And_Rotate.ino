@@ -23,7 +23,6 @@ void loop() {
   while (Serial.available() > 0){
     int rpm = Serial.parseInt();
     motor.setRPM(rpm);
-    motor.rotate(CW);
     Serial.println(rpm);
   }
 
