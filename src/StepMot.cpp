@@ -74,6 +74,8 @@ void StepMot::setSteps(uint32_t steps) {
 }
 
 void StepMot::setAngle(float newAngle) {
+  _currentAngle = _currentSteps * _anglePerStep;
+
   if(_mode == RELATIVE){
     if(newAngle > 0)  newAngle = _currentAngle + newAngle;
     else  newAngle = _currentAngle + newAngle - _backlash;
