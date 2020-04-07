@@ -1,5 +1,5 @@
 # Arduino library for Stepper Motors
-For all stepper motor drivers with STEP/DIR interface
+For all StepStick motor drivers
 
 ### Features
 this library:
@@ -7,6 +7,7 @@ this library:
 * will not block your code so you can do your stuff and drive the motor simultaneously!
 * can compensate a backlash for geared motors!
 * saves your battery and protects the motor from overheating by using power saving mode!
+* supports A4899, DRV8825, LV8729, TMC2100/2208/2209
 
 #### Methods
 ```C++
