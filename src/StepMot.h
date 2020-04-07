@@ -47,15 +47,15 @@ class StepMot
     void rotate(bool dir);            // rotating clockwise CW or counterclockwise CCW
     void rotate();                    // set speed (RPM) and rotate. Positive speed -> clockwise, negative -> counterclockwise
     float getAngle();                 // get the absolute actual position
-    void resetPos();                  // reset the actual position to 0
+    void resetPos(float pos = 0.0);   // reset the actual position to pos. Default is 0
     void step();                      // make one step
     bool ready();                     // get status if target is reached
     bool update();                    // this method drives the motor, so it must be in the loop() function. Returns true if the motor is moving and false otherwise
 
   private:
-    const float _stepsPerRevolution = 0.0;
-    const float _stepsPerAngle = 0.0;
-    const float _anglePerStep = 0.0;
+    const float _stepsPerRevolution = 0.0f;
+    const float _stepsPerAngle = 0.0f;
+    const float _anglePerStep = 0.0f;
     const uint8_t _stepPin;
     const uint8_t _dirPin;
     const uint8_t _enPin;
@@ -64,9 +64,10 @@ class StepMot
     uint32_t _targetSteps = 0;
     int32_t _currentSteps = 0;
     int8_t _stepCounter = 1;
-    float _targetAngle = 0.0;
-    float _currentAngle = 0.0;
-    float _backlash = 0.0;
+    float _targetAngle = 0.0f;
+    float _currentAngle = 0.0f;
+    float _lastAngle = 0.0f;
+    float _backlash = 0.0f;
     bool _mode = RELATIVE;
     bool _autoPower = false;
     bool _inverted = false;
