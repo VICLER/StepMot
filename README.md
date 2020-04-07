@@ -2,9 +2,11 @@
 For all stepper motor drivers with STEP/DIR interface
 
 ### Features
-* this library allows you to drive your stepper motor very precisely in ABSOLUTE mode
-* the timing is based on micros() so you can do another stuff parallel to driving the motor (but don't use delays while the motor is moving)
-* backlash compensation for geared motors
+this library:
+* allows you to drive your stepper motor very precisely and easy!
+* will not block your code so you can do your stuff and drive the motor simultaneously!
+* can compensate a backlash for geared motors!
+* saves your battery and protects the motor from overheating by using power saving mode!
 
 #### Methods
 ```C++
@@ -28,5 +30,5 @@ float getAngle();                   // get the absolute actual position
 void resetPos();                    // reset the actual position to 0
 void step();                        // make one step
 bool ready();                       // get status if target is reached
-bool update();                      // this method drives the motor, so it must be in the loop() function. Returns true if the motor is moving and false otherwise
+bool update();                      // this method drives the motor, so it must be called as often as possible. Returns true if the motor is moving and false otherwise
 ```
