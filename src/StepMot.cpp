@@ -86,13 +86,8 @@ void StepMot::setAngle(float newAngle) {
   if (newAngle < _lastAngle) StepMot::setDir(CCW);
   if (newAngle == _lastAngle) return;
 
-  if (_dir == CW)
-  {
-    _lastAngle = newAngle;
-    newAngle += _backlash;
-  }
-  else
-    _lastAngle = newAngle;
+  if (_dir == CW) newAngle += _backlash;
+  _lastAngle = newAngle;
 
   _targetAngle = abs(newAngle - _currentAngle);
   _targetSteps = round(_targetAngle * _stepsPerAngle);
@@ -121,7 +116,7 @@ void StepMot::resetPos(float pos = 0.0) {
   _currentAngle = pos;
   _currentSteps = pos * _stepsPerAngle;
   _targetSteps = 0;
-  _lastAngle = 0;
+  _lastAngle = _currentAngle;
   _ready = 1;
 }
 
