@@ -91,8 +91,7 @@ void StepMot::setAngle(float newAngle) {
     _lastAngle = newAngle;
     newAngle += _backlash;
   }
-  else
-    _lastAngle = newAngle;
+  else _lastAngle = newAngle;
 
   _targetAngle = abs(newAngle - _currentAngle);
   _targetSteps = round(_targetAngle * _stepsPerAngle);
