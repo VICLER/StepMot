@@ -36,6 +36,7 @@ void loop() {
     motor.setAngle(angle);
   }
   Serial.println(motor.getAngle());
+  
 }
 
 ISR(TIMER1_COMPA_vect)
