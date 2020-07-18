@@ -18,12 +18,11 @@ void setup() {
   motor.setRPM(10);             // speed in revolutions per minute
   motor.enable();               // power on the motor
 
-  // TIMER2 Configuration for 10kHz refresh rate
+  // TIMER2 Configuration for 20kHz refresh rate
   cli();
   TCCR2A = 0;
   TCCR2B = 0;
-  TCNT2 = 0;
-  OCR2A = 50;
+  OCR2A = 25;
   TCCR2A |= (1 << WGM21);
   TCCR2B |= (1 << CS20) | (1 <<CS21);   // 32 prescaler
   TIMSK2 |= (1 << OCIE2A); // enable timer compare interrupt
