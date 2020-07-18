@@ -1,5 +1,6 @@
-# Arduino library for Stepper Motors
-For all StepStick motor drivers
+<h3 align="center">Arduino library for Stepper Motors</h3>
+<p align="center">For all StepStick motor drivers with STEP/DIR interface</p>
+
 
 ## Features
 this library:
