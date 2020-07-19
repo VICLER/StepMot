@@ -1,7 +1,9 @@
 #include "StepMot.h"
 
 /* Example of using StepMot Library
- * read about another methods in StepMot.h
+ * 
+ * Open Serial port( Baud 115200) and type an angle in degrees
+ * 
  */
 
 #define STEPS_PER_REVOLUTION 2037.88642 // 28BYJ-48 geared stepper motor
