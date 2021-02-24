@@ -57,6 +57,10 @@ void StepMot::disable() {
   }
 }
 
+bool StepMot::enabled(){
+  return _enabled;
+}
+
 void StepMot::setDir(bool dir) {
   _dir = dir;
   if (_inverted) digitalWrite(_dirPin, !_dir);
@@ -111,13 +115,15 @@ void StepMot::rotate()
 }
 
 float StepMot::getAngle() {
+  cli();
   if(_backlash && _dir == CW) _currentAngle = _currentSteps * _anglePerStep - _backlash;
   else  _currentAngle = _currentSteps * _anglePerStep;
   _lastAngle = _currentAngle;
+  sei();
   return _currentAngle;
 }
 
-void StepMot::resetPos(float pos = 0.0) {
+void StepMot::resetPos(float pos) {
   _currentAngle = pos;
   _currentSteps = pos * _stepsPerAngle;
   _targetSteps = 0;
